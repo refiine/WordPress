@@ -1,0 +1,27 @@
+# App
+# ==============================================================================
+.env
+*.log
+cache/
+vendor/
+.DS_Store
+public/wp/
+wp-cli.phar
+node_modules/
+public/upgrade
+public/uploads/*
+
+# Plugins
+# ==============================================================================
+public/plugins/*
+!public/plugins/app-*
+!public/plugins/.gitkeep
+
+# MU-Plugins
+# ==============================================================================
+public/mu-plugins/*
+!public/mu-plugins/relative-urls.php
+!public/mu-plugins/acf-json-repoint.php
+!public/mu-plugins/disallow-indexing.php
+
+

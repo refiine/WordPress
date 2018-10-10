@@ -1,0 +1,90 @@
+{
+    "name": "21six/wordpress",
+    "description": "Sensible git friendly WordPress install",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Neil Sweeney",
+            "email": "neil.sweeney@21six.com",
+            "homepage": "https://wolfiezero.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/21six/WordPress/issues"
+    },
+    "require": {
+        "php": ">=7.0",
+        "vlucas/phpdotenv": "^2.4",
+        "oscarotero/env": "^1.1",
+        "johnpbloch/wordpress": "^4.9",
+        "rareloop/lumberjack-core": "^3.3",
+        "tightenco/collect": "5.5.33",
+        "wp-premium/advanced-custom-fields-pro": "dev-master",
+        "wpackagist-plugin/wp-mail-smtp": "*",
+        "wpackagist-plugin/wp-migrate-db": "*",
+        "wpackagist-plugin/amazon-s3-and-cloudfront": "*",
+        "wpackagist-plugin/wordpress-seo": "*"
+    },
+    "require-dev": {
+        "symfony/var-dumper": "3.4.17",
+        "larapack/dd": "^1.1",
+        "wpackagist-plugin/demo-data-creator": "*"
+    },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "wp-premium/advanced-custom-fields-pro",
+                "version": "master",
+                "type": "wordpress-plugin",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/wp-premium/advanced-custom-fields-pro/archive/master.zip",
+                    "reference": "master"
+                },
+                "require": {
+                    "composer/installers": "^1.0"
+                }
+            }
+        },
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        }
+    ],
+    "extra": {
+        "installer-paths": {
+            "public/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
+            "public/plugins/{$name}/": ["type:wordpress-plugin"],
+            "public/themes/{$name}/": ["type:wordpress-theme"]
+        },
+        "wordpress-install-dir": "public/wp"
+    },
+    "scripts": {
+        "install-wp-cli": [
+            "curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar"
+        ],
+        "update-wp-cli": [
+            "php wp-cli.phar cli update --yes"
+        ],
+        "tidy": [
+            "rm -rf public/wp/wp-content"
+        ],
+        "remove-git": [
+            "rm -rf .git/"
+        ],
+        "env": [
+            "php -r \"copy('.env.example', '.env');\""
+        ],
+        "new-project": [
+            "@composer install-wp-cli",
+            "@composer remove-git",
+            "@composer tidy",
+            "@composer env"
+        ],
+        "post-root-package-install": [
+            "@composer new-project"
+        ]
+    }
+}
