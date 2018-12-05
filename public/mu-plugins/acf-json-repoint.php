@@ -17,7 +17,7 @@ class RepointAcfJsonFiles
      *
      * @var string
      */
-    protected static $acfJsonDirectory = ABSPATH . '/acf-json';
+    protected static $acfJsonDirectory = ABSPATH . '/../../acf-json';
 
     /**
      * Initialise the class.
