@@ -15,20 +15,20 @@
     },
     "require": {
         "php": ">=7.0",
-        "vlucas/phpdotenv": "^2.4",
-        "oscarotero/env": "^1.1",
-        "johnpbloch/wordpress": "^4.9",
-        "rareloop/lumberjack-core": "^3.3",
-        "tightenco/collect": "^5.5.33",
+        "vlucas/phpdotenv": "2.4",
+        "oscarotero/env": "1.1.0",
+        "johnpbloch/wordpress": "4.9.9",
+        "rareloop/lumberjack-core": "3.3.1",
+        "tightenco/collect": "5.5.3",
         "wp-premium/advanced-custom-fields-pro": "dev-master",
-        "wpackagist-plugin/wp-mail-smtp": "*",
-        "wpackagist-plugin/wp-migrate-db": "*",
+        "wpackagist-plugin/wp-mail-smtp": "1.4.1",
+        "wpackagist-plugin/wp-migrate-db": "1.0.8",
         "wpackagist-plugin/amazon-s3-and-cloudfront": "*",
-        "wpackagist-plugin/wordpress-seo": "*"
+        "wpackagist-plugin/wordpress-seo": "9.4"
     },
     "require-dev": {
-        "symfony/var-dumper": "^3.4.17",
-        "larapack/dd": "^1.1",
+        "symfony/var-dumper": "3.4.20",
+        "larapack/dd": "1.1",
         "wpackagist-plugin/demo-data-creator": "*"
     },
     "repositories": [
