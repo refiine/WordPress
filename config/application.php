@@ -12,13 +12,11 @@ $webRootDir = $rootDir . '/public';
 
 /**
  * Expose global env() function from oscarotero/env
- * =============================================================================
  */
 Env::init();
 
 /**
  * Use Dotenv to set required environment variables and load .env file in root
- * =============================================================================
  */
 $dotenv = new Dotenv\Dotenv($rootDir);
 if (file_exists($rootDir . '/.env')) {
@@ -42,8 +40,6 @@ if (file_exists($rootDir . '/.env')) {
 
 /**
  * Set up our global environment constant and load its config first
- * =============================================================================
- * Default: production
  */
 define('WP_ENV', env('WP_ENV') ?: 'production');
 
@@ -57,21 +53,18 @@ if (! defined('WP_DEBUG') || ! WP_DEBUG) {
 }
 
 /**
- * Theme
- * =============================================================================
+ * Default Wordpress theme
  */
 define('WP_DEFAULT_THEME', env('WP_THEME') ?: 'app');
 
 /**
  * URLs
- * =============================================================================
  */
 define('WP_HOME', env('WP_HOME'));
 define('WP_SITEURL', env('WP_SITEURL'));
 
 /**
  * Custom Content Directory
- * =============================================================================
  */
 define('WP_ROOT', $rootDir);
 define('CONTENT_DIR', '');
@@ -80,7 +73,6 @@ define('WP_CONTENT_URL', WP_HOME . CONTENT_DIR);
 
 /**
  * DB settings
- * =============================================================================
  */
 define('DB_NAME', env('DB_NAME'));
 define('DB_USER', env('DB_USER'));
@@ -92,14 +84,17 @@ $table_prefix = env('DB_PREFIX') ?: 'wp_';
 
 /**
  * WP Mail SMTP
- * =============================================================================
  */
 define('WPMS_ON', env('WPMS_ON') ?: true);
 define('WPMS_SMTP_PASS', env('WPMS_SMTP_PASS') ?: '');
 
 /**
+ * ACF
+ */
+define('ACF_JSON_DIRECTORY', WP_ROOT . '/' . (env('ACF_JSON_DIRECTORY') ?: '/acf-json'));
+
+/**
  * Authentication Unique Keys and Salts
- * =============================================================================
  */
 define('AUTH_KEY', env('AUTH_KEY'));
 define('SECURE_AUTH_KEY', env('SECURE_AUTH_KEY'));
@@ -112,15 +107,14 @@ define('NONCE_SALT', env('NONCE_SALT'));
 
 /**
  * Custom Settings
- * =============================================================================
  */
-define('AUTOMATIC_UPDATER_DISABLED', true);
+define('AUTOMATIC_UPDATER_DISABLED', env('AUTOMATIC_UPDATER_DISABLED') ?: true);
 define('DISABLE_WP_CRON', env('DISABLE_WP_CRON') ?: false);
-define('DISALLOW_FILE_EDIT', true);
+define('DISALLOW_FILE_EDIT', env('DISALLOW_FILE_EDIT') ?: true);
+define('DISALLOW_FILE_MODS', env('DISALLOW_PLUGINS') ?: true);
 
 /**
  * Bootstrap WordPress
- * =============================================================================
  */
 if (!defined('ABSPATH')) {
     define('ABSPATH', $webRootDir . '/wp/');
