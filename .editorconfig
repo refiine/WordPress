@@ -1,7 +1,4 @@
-# ==============================================================================
-# Editor Config
-# ==============================================================================
-# http://editorconfig.org
+# editorconfig.org
 
 root = true
 
@@ -13,5 +10,5 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-[{.*,*.{js,scss}}]
+[{.*,*.{js,scss,json}}]
 indent_size = 2
