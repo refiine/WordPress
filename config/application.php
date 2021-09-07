@@ -1,121 +1,147 @@
 <?php
 
 /**
- * @var string Directory containing all of the site's files
+ * Your base production configuration goes in this file. Environment-specific
+ * overrides go in their respective config/environments/{{WP_ENV}}.php file.
+ *
+ * A good default policy is to deviate from the production config as little as
+ * possible. Try to define as much of your configuration in this file as you
+ * can.
  */
-$rootDir = dirname(__DIR__);
+
+use Roots\WPConfig\Config;
+
+use function Env\env;
 
 /**
- * @var string Document Root
+ * Directory containing all of the site's files
+ *
+ * @var string
  */
-$webRootDir = $rootDir . '/public';
+$root_dir = dirname(__DIR__);
 
 /**
- * Expose global env() function from oscarotero/env
+ * Document Root
+ *
+ * @var string
  */
-Env::init();
+$webroot_dir = $root_dir . '/web';
 
 /**
  * Use Dotenv to set required environment variables and load .env file in root
+ * .env.local will override .env if it exists
  */
-$dotenv = new Dotenv\Dotenv($rootDir);
-if (file_exists($rootDir . '/.env')) {
+$env_files = file_exists($root_dir . '/.env.local')
+    ? ['.env', '.env.local']
+    : ['.env'];
+
+$dotenv = Dotenv\Dotenv::createUnsafeImmutable($root_dir, $env_files, false);
+if (file_exists($root_dir . '/.env')) {
     $dotenv->load();
-    $dotenv->required([
-        'DB_NAME',
-        'DB_USER',
-        'DB_PASSWORD',
-        'WP_HOME',
-        'WP_SITEURL',
-        'AUTH_KEY',
-        'SECURE_AUTH_KEY',
-        'LOGGED_IN_KEY',
-        'NONCE_KEY',
-        'AUTH_SALT',
-        'SECURE_AUTH_SALT',
-        'LOGGED_IN_SALT',
-        'NONCE_SALT'
-    ]);
+    $dotenv->required(['WP_HOME', 'WP_SITEURL']);
+    if (!env('DATABASE_URL')) {
+        $dotenv->required(['DB_NAME', 'DB_USER', 'DB_PASSWORD']);
+    }
 }
 
 /**
  * Set up our global environment constant and load its config first
+ * Default: production
  */
 define('WP_ENV', env('WP_ENV') ?: 'production');
-
-$envConfig = __DIR__ . '/environments/' . WP_ENV . '.php';
-if (file_exists($envConfig)) {
-    require_once $envConfig;
-}
-
-if (! defined('WP_DEBUG') || ! WP_DEBUG) {
-    ini_set('display_errors', 0);
-}
-
-/**
- * Default Wordpress theme
- */
-define('WP_DEFAULT_THEME', env('WP_THEME') ?: 'app');
 
 /**
  * URLs
  */
-define('WP_HOME', env('WP_HOME'));
-define('WP_SITEURL', env('WP_SITEURL'));
+Config::define('WP_HOME', env('WP_HOME'));
+Config::define('WP_SITEURL', env('WP_SITEURL'));
 
 /**
  * Custom Content Directory
  */
-define('WP_ROOT', $rootDir);
-define('CONTENT_DIR', '');
-define('WP_CONTENT_DIR', $webRootDir . CONTENT_DIR);
-define('WP_CONTENT_URL', WP_HOME . CONTENT_DIR);
+Config::define('CONTENT_DIR', '/app');
+Config::define('WP_CONTENT_DIR', $webroot_dir . Config::get('CONTENT_DIR'));
+Config::define('WP_CONTENT_URL', Config::get('WP_HOME') . Config::get('CONTENT_DIR'));
 
 /**
  * DB settings
  */
-define('DB_NAME', env('DB_NAME'));
-define('DB_USER', env('DB_USER'));
-define('DB_PASSWORD', env('DB_PASSWORD'));
-define('DB_HOST', env('DB_HOST') ?: 'localhost');
-define('DB_CHARSET', 'utf8mb4');
-define('DB_COLLATE', '');
+Config::define('DB_NAME', env('DB_NAME'));
+Config::define('DB_USER', env('DB_USER'));
+Config::define('DB_PASSWORD', env('DB_PASSWORD'));
+Config::define('DB_HOST', env('DB_HOST') ?: 'localhost');
+Config::define('DB_CHARSET', 'utf8mb4');
+Config::define('DB_COLLATE', '');
 $table_prefix = env('DB_PREFIX') ?: 'wp_';
 
-/**
- * WP Mail SMTP
- */
-define('WPMS_ON', env('WPMS_ON') ?: true);
-define('WPMS_SMTP_PASS', env('WPMS_SMTP_PASS') ?: '');
+if (env('DATABASE_URL')) {
+    $dsn = (object) parse_url(env('DATABASE_URL'));
 
-/**
- * ACF
- */
-define('ACF_JSON_DIRECTORY', WP_ROOT . '/' . (env('ACF_JSON_DIRECTORY') ?: '/acf-json'));
+    Config::define('DB_NAME', substr($dsn->path, 1));
+    Config::define('DB_USER', $dsn->user);
+    Config::define('DB_PASSWORD', isset($dsn->pass) ? $dsn->pass : null);
+    Config::define('DB_HOST', isset($dsn->port) ? "{$dsn->host}:{$dsn->port}" : $dsn->host);
+}
 
 /**
  * Authentication Unique Keys and Salts
  */
-define('AUTH_KEY', env('AUTH_KEY'));
-define('SECURE_AUTH_KEY', env('SECURE_AUTH_KEY'));
-define('LOGGED_IN_KEY', env('LOGGED_IN_KEY'));
-define('NONCE_KEY', env('NONCE_KEY'));
-define('AUTH_SALT', env('AUTH_SALT'));
-define('SECURE_AUTH_SALT', env('SECURE_AUTH_SALT'));
-define('LOGGED_IN_SALT', env('LOGGED_IN_SALT'));
-define('NONCE_SALT', env('NONCE_SALT'));
+Config::define('AUTH_KEY', env('AUTH_KEY'));
+Config::define('SECURE_AUTH_KEY', env('SECURE_AUTH_KEY'));
+Config::define('LOGGED_IN_KEY', env('LOGGED_IN_KEY'));
+Config::define('NONCE_KEY', env('NONCE_KEY'));
+Config::define('AUTH_SALT', env('AUTH_SALT'));
+Config::define('SECURE_AUTH_SALT', env('SECURE_AUTH_SALT'));
+Config::define('LOGGED_IN_SALT', env('LOGGED_IN_SALT'));
+Config::define('NONCE_SALT', env('NONCE_SALT'));
 
 /**
  * Custom Settings
  */
-define('AUTOMATIC_UPDATER_DISABLED', env('AUTOMATIC_UPDATER_DISABLED') ?: true);
-define('DISABLE_WP_CRON', env('DISABLE_WP_CRON') ?: false);
-define('DISALLOW_FILE_EDIT', env('DISALLOW_FILE_EDIT') ?: true);
-define('DISALLOW_FILE_MODS', env('DISALLOW_PLUGINS') ?: true);
+Config::define('AUTOMATIC_UPDATER_DISABLED', true);
+Config::define('DISABLE_WP_CRON', env('DISABLE_WP_CRON') ?: false);
+// Disable the plugin and theme file editor in the admin
+Config::define('DISALLOW_FILE_EDIT', true);
+// Disable plugin and theme updates and installation from the admin
+Config::define('DISALLOW_FILE_MODS', true);
+// Limit the number of post revisions that Wordpress stores (true (default WP): store every revision)
+Config::define('WP_POST_REVISIONS', env('WP_POST_REVISIONS') ?: true);
+
+/**
+ * Debugging Settings
+ */
+Config::define('WP_DEBUG_DISPLAY', false);
+Config::define('WP_DEBUG_LOG', false);
+Config::define('SCRIPT_DEBUG', false);
+ini_set('display_errors', '0');
+
+/**
+ * Refiine Additions
+ */
+Config::define('WPMS_ON', env('WPMS_ON') ?: true);
+Config::define('WPMS_SMTP_PASS', env('WPMS_SMTP_PASS') ?: '');
+Config::define('ACF_JSON_DIRECTORY', $root_dir . '/' . (env('ACF_JSON_DIRECTORY') ?: '/acf-json'));
+
+
+/**
+ * Allow WordPress to detect HTTPS when used behind a reverse proxy or a load balancer
+ * See https://codex.wordpress.org/Function_Reference/is_ssl#Notes
+ */
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+    $_SERVER['HTTPS'] = 'on';
+}
+
+$env_config = __DIR__ . '/environments/' . WP_ENV . '.php';
+
+if (file_exists($env_config)) {
+    require_once $env_config;
+}
+
+Config::apply();
 
 /**
  * Bootstrap WordPress
  */
 if (!defined('ABSPATH')) {
-    define('ABSPATH', $webRootDir . '/wp/');
+    define('ABSPATH', $webroot_dir . '/wp/');
 }

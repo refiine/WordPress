@@ -1,8 +1,18 @@
 <?php
 
-// `staging`
+/**
+ * Configuration overrides for WP_ENV === 'staging'
+ */
 
-define('WP_DEBUG', env('WP_DEBUG') ?: false);
-define('SCRIPT_DEBUG', env('WP_DEBUG') ?: false);
-define('WP_DEBUG_DISPLAY', env('WP_DEBUG') ?: false);
-ini_set('display_errors', env('WP_DEBUG') ? 1 : 0);
+use Roots\WPConfig\Config;
+
+/**
+ * You should try to keep staging as close to production as possible. However,
+ * should you need to, you can always override production configuration values
+ * with `Config::define`.
+ *
+ * Example: `Config::define('WP_DEBUG', true);`
+ * Example: `Config::define('DISALLOW_FILE_MODS', false);`
+ */
+
+Config::define('DISALLOW_INDEXING', true);
