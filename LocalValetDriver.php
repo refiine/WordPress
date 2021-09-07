@@ -1,4 +1,5 @@
 <?php
+
 // @codingStandardsIgnoreStart
 
 class LocalValetDriver extends LaravelValetDriver
@@ -15,6 +16,7 @@ class LocalValetDriver extends LaravelValetDriver
     {
         return true;
     }
+
     /**
      * Determine if the incoming request is for a static file.
      *
@@ -31,6 +33,7 @@ class LocalValetDriver extends LaravelValetDriver
         }
         return false;
     }
+
     /**
      * Get the fully resolved path to the application's front controller.
      *
@@ -50,6 +53,7 @@ class LocalValetDriver extends LaravelValetDriver
         }
         return $sitePath . '/public/index.php';
     }
+
     /**
      * Redirect to uri with trailing slash.
      *
