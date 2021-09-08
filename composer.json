@@ -101,7 +101,9 @@
     ],
     "install-lumberjack": [
       "git clone https://github.com/Rareloop/lumberjack.git public/app/themes/lumberjack",
-      "php -r \"PHP_OS === 'Windows' ? exec('rd /s /q public/themes/app/.github') : exec('rm -rf public/themes/app/.github');\""
+      "php -r \"PHP_OS === 'Windows' ? exec('rd /s /q public/themes/app/.github') : exec('rm -rf public/themes/app/.github');\"",
+      "php -r \"unlink('public/themes/app/.editorconfig');\"",
+      "php -r \"unlink('public/themes/app/phpcs.xml');\""
     ],
     "new-project": [
       "@composer remove-git",
