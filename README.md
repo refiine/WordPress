@@ -5,7 +5,7 @@ WordPress for the versioning and composer generation with Lumberjack support.
 ## About
 
 This version of WordPress is based off [Bedrock][1] with a additions to suite
-the [refiine][14] workflow.
+the [refiine][15] workflow.
 
 ## What's Included?
 
@@ -76,6 +76,15 @@ Runs the follow composer commands;
 `composer codesniff`
 Checks the project using [PHP_CodeSniffer][14] (useful for pre-deploy)
 
+## FAQs
+
+### VSCode Intelephense is showing errors for common WordPress functions constants
+
+You'll need to [add "Core" and "wordpress" to `Intelephense: Stubs`][16].
+
+You also find more issues related to this for other packages. Have a look at
+[PHP Stubs Library][17] that may fix the issue.
+
 [1]: https://roots.io/bedrock/
 [2]: https://github.com/Rareloop/lumberjack
 [3]: https://wp-cli.org/
@@ -90,4 +99,6 @@ Checks the project using [PHP_CodeSniffer][14] (useful for pre-deploy)
 [12]: https://yoast.com/wordpress/plugins/seo/
 [13]: https://wordpress.org/plugins/acf-content-analysis-for-yoast-seo/
 [14]: https://github.com/squizlabs/PHP_CodeSniffer
-[14]: https://refiine.co.uk/
+[15]: https://refiine.co.uk/
+[16]: https://github.com/bmewburn/intelephense-docs/issues/2#issuecomment-896967994
+[17]: https://github.com/orgs/php-stubs/repositories
