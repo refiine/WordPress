@@ -9,6 +9,6 @@ Author URI:   https://wolfiezero.com/
 License:      MIT License
 */
 
-require_once('classes/repoint-acf-json-class.php');
+require_once('repoint-acf-json-class.php');
 
 \WordPress\MuPlugins\RepointAcfJson::init();

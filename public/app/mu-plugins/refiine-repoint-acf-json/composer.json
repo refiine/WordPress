@@ -1,0 +1,19 @@
+{
+  "name": "refiine/repoint-acf-json",
+  "type": "wordpress-muplugin",
+  "license": "MIT",
+  "description": "Makes URLs created by WordPress relative.",
+  "authors": [
+    {
+      "name": "Neil Sweeney",
+      "email": "neil@wolfiezero.com",
+      "homepage": "https://wolfiezero.com"
+    }
+  ],
+  "keywords": [
+    "wordpress"
+  ],
+  "require": {
+    "php": ">=7.3"
+  }
+}

@@ -120,7 +120,6 @@ ini_set('display_errors', '0');
  */
 Config::define('WPMS_ON', env('WPMS_ON') ?: true);
 Config::define('WPMS_SMTP_PASS', env('WPMS_SMTP_PASS') ?: '');
-Config::define('ACF_JSON_DIRECTORY', $root_dir . '/' . (env('ACF_JSON_DIRECTORY') ?: '/acf-json'));
 
 
 /**

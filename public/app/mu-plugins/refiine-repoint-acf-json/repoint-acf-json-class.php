@@ -9,7 +9,7 @@ class RepointAcfJson
      *
      * @var string
      */
-    protected static $acfJsonDirectory = ACF_JSON_DIRECTORY ?: WP_ROOT . '/acf-json';
+    protected static $acfJsonDirectory = ABSPATH . '/acf-json';
 
     /**
      * Initialise the class.
@@ -56,7 +56,7 @@ class RepointAcfJson
     {
         self::createIfNone();
         unset($paths[0]);
-        $paths[] = WP_ROOT . '/acf-json';
+        $paths[] = self::$acfJsonDirectory;
         return $paths;
     }
 }

@@ -1,5 +1,16 @@
 <?php
 
+/*
+Plugin Name:  Disallow Indexing
+Plugin URI:   https://roots.io/bedrock/
+Description:  Disallow indexing of your site on non-production environments.
+Version:      2.0.0
+Author:       Roots
+Author URI:   https://roots.io/
+Text Domain:  roots
+License:      MIT License
+*/
+
 namespace WordPress\MuPlugins;
 
 class RelativeUrls
@@ -66,7 +77,7 @@ class RelativeUrls
     public static function makeRelative(string $url): string
     {
         $updatedUrl = $url;
-        $domain = explode('//', WP_HOME)[1];
+        $domain = explode('//', get_site_url())[1];
         if (strpos($url, $domain)) {
             $updatedUrl = explode($domain, $url)[1];
         }

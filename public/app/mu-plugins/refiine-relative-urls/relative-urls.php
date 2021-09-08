@@ -9,6 +9,6 @@ Author URI:   https://wolfiezero.com/
 License:      MIT License
 */
 
-require_once('classes/relative-urls-class.php');
+require_once('relative-urls-class.php');
 
 \WordPress\MuPlugins\RelativeUrls::init();
