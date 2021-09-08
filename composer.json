@@ -100,10 +100,8 @@
       "php -r \"copy('.env.example', '.env');\""
     ],
     "install-lumberjack": [
-      "git clone https://github.com/Rareloop/lumberjack.git public/themes/app",
-      "php -r \"PHP_OS === 'Windows' ? exec('rd /s /q public/themes/app/.github') : exec('rm -rf public/themes/app/.github');\"",
-      "php -r \"unlink('public/themes/app/.editorconfig');\"",
-      "php -r \"unlink('public/themes/app/composer.json');\""
+      "git clone https://github.com/Rareloop/lumberjack.git public/app/themes/lumberjack",
+      "php -r \"PHP_OS === 'Windows' ? exec('rd /s /q public/themes/app/.github') : exec('rm -rf public/themes/app/.github');\""
     ],
     "new-project": [
       "@composer remove-git",
