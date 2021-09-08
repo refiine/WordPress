@@ -3,8 +3,9 @@
   <file>public/app</file>
 
   <exclude-pattern>*/vendor/*</exclude-pattern>
-  <exclude-pattern>*/public/wp/*</exclude-pattern>
-  <exclude-pattern>*/public/app/plugins/*</exclude-pattern>
+  <exclude-pattern>*/wp/*</exclude-pattern>
+  <!-- We exclude all plugins unless they start with are refiine in the folder (or file if single) -->
+  <exclude-pattern>*/(mu-)?plugins/(?!refiine-).+</exclude-pattern>
 
   <arg name="extensions" value="php"/>
   <arg value="-colors"/>
@@ -12,3 +13,4 @@
 
   <rule ref="PSR12"/>
 </ruleset>
+
