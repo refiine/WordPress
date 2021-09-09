@@ -1,16 +1,22 @@
 <?xml version="1.0"?>
-<ruleset name="Refiine Coding Standard">
+<ruleset name="Refiine">
+  <description>Refiine Coding Standards</description>
+
+  <!-- Scan all files in directory -->
   <file>public/app</file>
 
+  <!-- Ignore WordPress and Composer dependencies -->
   <exclude-pattern>*/vendor/*</exclude-pattern>
   <exclude-pattern>*/wp/*</exclude-pattern>
   <!-- We exclude all plugins unless they start with are refiine in the folder (or file if single) -->
   <exclude-pattern>*/(mu-)?plugins/(?!refiine-).+</exclude-pattern>
 
-  <arg name="extensions" value="php"/>
+  <!-- Show colors in console -->
   <arg value="-colors"/>
+
+  <!-- Show sniff codes in all reports -->
   <arg value="ns"/>
 
+  <!-- Use PSR-12 as a base -->
   <rule ref="PSR12"/>
 </ruleset>
-
